@@ -25,8 +25,12 @@ window.addEventListener ("load", function () {
     GM_registerMenuCommand("Wanikanify: Enable auto-run", promptAutoRun);
     GM_registerMenuCommand("Wanikanify: Set API key", promptApiKey);
 
-    if (GM_getValue("autoRun") == 1)
+    var autoRunOn = GM_getValue("autoRunOn", "").split(",");
+    var hostname = document.location.hostname.replace("www.", "");
+
+    if (autoRunOn[0] === "*" || autoRunOn.indexOf(hostname) !== -1) {
         run(false);
+    }
 
 }, false);
 
@@ -56,8 +60,10 @@ function tryRefreshVocabulary() {
 
 /* Specifiy whether to run automatically */
 function promptAutoRun() {
-    var autoRun = parseInt(window.prompt("Enter 1 to enable auto-run and 0 to disable", GM_getValue("autoRun") ? 1 : 0));
-    GM_setValue("autoRun", autoRun);
+    var autoRunOn = window.prompt('Please, enter a comma-separated list of domains ' +
+                                  '("*" — all domains, empty to disable):',
+                             GM_getValue("autoRunOn") || "");
+    GM_setValue("autoRunOn", autoRunOn);
 }
 
 /* Specify the WaniKani API key */
