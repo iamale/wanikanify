@@ -9,8 +9,6 @@
 // @grant       GM_setValue
 // @grant       GM_registerMenuCommand
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @downloadURL https://greasyfork.org/scripts/4719-wanikanify/code/WaniKanify.user.js
-// @updateURL   https://greasyfork.org/scripts/4719-wanikanify/code/WaniKanify.meta.js
 // ==/UserScript==
 
 // Current format version of the vocab database
@@ -39,15 +37,21 @@ window.addEventListener ("load", function () {
 /* Run script */
 function tryRun() {
     var apiKey = getApiKey();
-    if (apiKey != undefined)
+    if (apiKey != undefined) {
         run(false);
+    } else {
+        alert("No API key specified! :(");
+    }
 }
 
 /* Refresh vocabulary */
 function tryRefreshVocabulary() {
     var apiKey = getApiKey();
-    if (apiKey != undefined)
+    if (apiKey != undefined) {
         downloadVocab();
+    } else {
+        alert("No API key specified! :(");
+    }
 }
 
 /* Specifiy whether to run automatically */
